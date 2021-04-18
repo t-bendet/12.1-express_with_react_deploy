@@ -1,8 +1,13 @@
 const express = require("express");
+const path = require('path');
+
 const { getMoviesList, addMovie, getMovie, deleteMovie } = require("./utils");
 const app = express();
 const cors = require("cors");
-const port = process.env.PORT || 9000
+const port = process.env.PORT || 3000;
+const publicPath = path.join(__dirname, '..', 'public');
+app.use(express.static(publicPath));
+
 app.use(express.json());
 // TODO add status codes and error handling
 app.use(cors());
