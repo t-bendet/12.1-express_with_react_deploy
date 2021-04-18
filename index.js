@@ -1,19 +1,30 @@
 const express = require("express");
-const path = require('path');
-
+const path = require("path");
+const bodyParser = require("body-parser");
 const { getMoviesList, addMovie, getMovie, deleteMovie } = require("./utils");
 const app = express();
 const cors = require("cors");
 
-const port = process.env.PORT || 3000;
-
-const publicPath = __filename
-app.use(express.static(publicPath));
-
-
 app.use(express.json());
-// TODO add status codes and error handling
-app.use(cors());
+const whitelist = [
+  "http://localhost:3000",
+  "http://localhost:8080",
+  "https://shrouded-journey-38552.herokuapp.com",
+];
+const corsOptions = {
+  origin: function (origin, callback) {
+    console.log("** Origin of request " + origin);
+    if (whitelist.indexOf(origin) !== -1 || !origin) {
+      console.log("Origin acceptable");
+      callback(null, true);
+    } else {
+      console.log("Origin rejected");
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+};
+app.use(helmet());
+app.use(cors(corsOptions));
 
 //get all Movies
 app.get("/api/movies", (req, res) => {
@@ -48,6 +59,16 @@ app.delete("/api/movies/:id", (req, res) => {
 });
 
 // PORT
-app.listen(port, () => {
-  console.log("Server is up on port" + port);
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "client/build")));
+
+  app.get("*", function (req, res) {
+    res.sendFile(path.join(__dirname, "client/build", "index.html"));
+  });
+}
+
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, (req, res) => {
+  console.log(`server listening on port: ${PORT}`);
 });

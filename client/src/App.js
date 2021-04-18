@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Card from "./Card";
-console.log('App loaded');
+console.log("App loaded");
 
 const App = () => {
   const [data, setData] = useState([]);
