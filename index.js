@@ -23,7 +23,6 @@ const corsOptions = {
     }
   },
 };
-app.use(helmet());
 app.use(cors(corsOptions));
 
 //get all Movies
