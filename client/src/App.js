@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Card from "./Card";
+//http://localhost:9000
 
 const App = () => {
   const [data, setData] = useState([]);
   useEffect(() => {
     const getData = async () => {
-      const response = await axios.get("http://localhost:9000/api/movies");
+      const response = await axios.get("/api/movies");
       setData(response.data);
     };
     getData();

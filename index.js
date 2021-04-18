@@ -2,7 +2,7 @@ const express = require("express");
 const { getMoviesList, addMovie, getMovie, deleteMovie } = require("./utils");
 const app = express();
 const cors = require("cors");
-
+const port = process.env.PORT || 9000
 app.use(express.json());
 // TODO add status codes and error handling
 app.use(cors());
@@ -40,6 +40,6 @@ app.delete("/api/movies/:id", (req, res) => {
 });
 
 // PORT
-app.listen(9000, () => {
-  console.log("Server is up on port 9000.");
+app.listen(port, () => {
+  console.log("Server is up on port" + port);
 });
