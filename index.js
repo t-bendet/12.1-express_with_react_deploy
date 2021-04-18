@@ -1,6 +1,5 @@
 const express = require("express");
 const path = require("path");
-const bodyParser = require("body-parser");
 const { getMoviesList, addMovie, getMovie, deleteMovie } = require("./utils");
 const app = express();
 const cors = require("cors");
